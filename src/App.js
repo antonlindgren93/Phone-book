@@ -1,24 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import AddContact from "./components/AddContact";
+import ContactList from "./components/ContactList";
 
 function App() {
+  const [contacts, setContacts] = useState([]);
+  const addContactToList = (contact) => {
+    setContacts(
+      [...contacts, contact].sort((a, b) =>
+        a.lastName.toLowerCase() > b.lastName.toLowerCase() ? 1 : -1
+      )
+    );
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h3>Add a new contact:</h3>
+      <AddContact addContactToList={addContactToList} />
+      <ContactList contacts={contacts} />
+    </>
   );
 }
 
